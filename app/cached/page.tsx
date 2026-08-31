@@ -1,6 +1,8 @@
-import TodoStateOnlyApp from '@/app/components/TodoStateOnlyApp';
+import React from 'react';
+import TodoCachedApp from './components/TodoCachedApp';
 
-export default async function Page() {
+export default async function CachedTodoPage() {
+  // Simulasi data awal (berupa array kosong agar tidak error)
   const initialTodos: any[] = [];
 
   return (
@@ -12,7 +14,8 @@ export default async function Page() {
               Daftar Tugas (Todo List)
             </h1>
           </header>
-          <TodoStateOnlyApp initialTodos={initialTodos} />
+          {/* Halaman Caching: Menggunakan TodoCachedApp */}
+          <TodoCachedApp initialTodos={initialTodos} />
         </div>
       </div>
     </main>

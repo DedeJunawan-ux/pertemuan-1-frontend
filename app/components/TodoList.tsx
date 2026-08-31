@@ -1,14 +1,33 @@
-import TodoItem from "./TodoItem";
+'use client';
 
-export default function TodoList() {
+import React from 'react';
+import TodoItem from './TodoItem';
+import { Todo } from '../types/todo';
+
+type TodoListProps = {
+  todos: Todo[];
+  onToggleTodo: (id: number) => void;
+  onDeleteTodo: (id: number) => void;
+};
+
+export default function TodoList({ todos, onToggleTodo, onDeleteTodo }: TodoListProps) {
   return (
-    <div className="border rounded p-4 shadow-sm bg-white">
-      <h3 className="font-bold mb-4 text-lg text-black">Daftar Tugas</h3>
-      <ul>
-        {/* Memanggil komponen item beberapa kali sebagai contoh */}
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
+    <div className="mt-6">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-gray-800">Daftar Tugas</h2>
+        <span className="text-xs bg-gray-200 text-gray-600 px-2.5 py-1 rounded-full font-medium">
+          {todos.length} item
+        </span>
+      </div>
+      <ul className="space-y-3">
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onToggle={onToggleTodo}
+            onDelete={onDeleteTodo}
+          />
+        ))}
       </ul>
     </div>
   );
