@@ -11,7 +11,7 @@ export default function RemoteTodosPage() {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        // Memanggil internal Route Handler Next.js yang sudah kita buat
+     
         const response = await fetch('/api/todos?limit=10');
         if (!response.ok) throw new Error('Gagal mengambil data dari server');
         

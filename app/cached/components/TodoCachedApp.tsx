@@ -11,7 +11,6 @@ type TodoCachedAppProps = {
 };
 
 export default function TodoCachedApp({ initialTodos }: TodoCachedAppProps) {
-  // Caching State: Menggunakan custom hook useLocalStorage yang tersinkron otomatis
   const [todos, setTodos] = useLocalStorage<Todo[]>(
     'TODO_LIST_CACHE',
     initialTodos
@@ -50,7 +49,6 @@ export default function TodoCachedApp({ initialTodos }: TodoCachedAppProps) {
     <div>
       <TodoForm onAddTodo={handleAddTodo} />
       
-      {/* Indikator Status Caching & Reset */}
       <div className="flex items-center justify-between text-xs text-gray-500 mb-2 px-1">
         <span className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

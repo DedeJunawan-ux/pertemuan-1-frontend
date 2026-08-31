@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-// Menggunakan relative path mundur ke root folder
 import { getTasks } from '../../../lib/tasks';
 import { todoService } from '../../../services/todoService';
 import { ApiResponse } from '../../types/api-todo';

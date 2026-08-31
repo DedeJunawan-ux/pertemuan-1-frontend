@@ -2,7 +2,7 @@ import React from 'react';
 import TodoCachedApp from './components/TodoCachedApp';
 
 export default async function CachedTodoPage() {
-  // Simulasi data awal (berupa array kosong agar tidak error)
+
   const initialTodos: any[] = [];
 
   return (
@@ -14,7 +14,7 @@ export default async function CachedTodoPage() {
               Daftar Tugas (Todo List)
             </h1>
           </header>
-          {/* Halaman Caching: Menggunakan TodoCachedApp */}
+          {/* Halaman Caching */}
           <TodoCachedApp initialTodos={initialTodos} />
         </div>
       </div>

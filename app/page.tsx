@@ -12,7 +12,7 @@ export default async function TodoPage() {
               Daftar Tugas (Todo List)
             </h1>
           </header>
-          {/* Halaman Beranda: Menggunakan State Murni (In-Memory) */}
+
           <TodoStateOnlyApp initialTodos={initialTodos} />
         </div>
       </div>

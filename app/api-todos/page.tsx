@@ -1,11 +1,9 @@
 import React from 'react';
 import ApiTodoList from './components/ApiTodoList';
 import { getTasks } from '../../lib/tasks';
-// Tambahan: Import TaskItem agar TypeScript mengenali tipe datanya
 import { TaskItem } from '../types/api-todo';
 
 export default async function ApiTodosPage() {
-  // Tambahan: Mendeklarasikan bahwa array ini berisi TaskItem
   let initialTasks: TaskItem[] = []; 
   
   try {
