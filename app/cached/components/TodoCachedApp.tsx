@@ -4,7 +4,7 @@ import React from 'react';
 import TodoForm from '../../components/TodoForm';
 import TodoList from '../../components/TodoList';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { Todo } from '../../types/todo';
+import { Todo } from '../../../types/todo';
 
 type TodoCachedAppProps = {
   initialTodos: Todo[];
@@ -16,11 +16,11 @@ export default function TodoCachedApp({ initialTodos }: TodoCachedAppProps) {
     initialTodos
   );
 
-  const handleAddTodo = (title: string) => {
+  const handleAddTodo = (title: string, description: string) => {
     const newTodo: Todo = {
       id: Date.now(),
       title,
-      description: 'Tugas baru yang tersimpan di localStorage.',
+      description: description,
       completed: false,
       createdAt: new Date().toISOString().split('T')[0],
     };

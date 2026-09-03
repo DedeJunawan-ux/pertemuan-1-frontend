@@ -1,5 +1,5 @@
 import { todoService, FetchTodosParams } from '../services/todoService';
-import { ApiTodo, TaskItem } from '../app/types/api-todo';
+import { ApiTodo, TaskItem } from '../types/api-todo';
 
 export function formatApiTodoToTask(raw: ApiTodo): TaskItem {
   return {
