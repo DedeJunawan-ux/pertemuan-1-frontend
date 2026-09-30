@@ -1,82 +1,91 @@
 'use client';
+
+import React from 'react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import TaskNotFound from './TaskNotFound';
+import { Todo } from '@/types/todo';
 
-type Todo = {
-  id: number;
-  title: string;
-  description: string;
-  completed: boolean;
-  createdAt: string;
-};
-
-export default function TaskDetailCard({ taskId }: { taskId: string }) {
-  const [task, setTask] = useState<Todo | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const savedTodos = localStorage.getItem('TODO_LIST_CACHE');
-    
-    if (savedTodos) {
-      const parsedTodos: Todo[] = JSON.parse(savedTodos);
-      const foundTask = parsedTodos.find(t => t.id.toString() === taskId);
-      
-      if (foundTask) {
-        setTask(foundTask);
-      }
-    }
-    setIsLoading(false);
-  }, [taskId]);
-
-  if (isLoading) {
-    return <div className="text-center py-10 text-gray-500">Memuat detail tugas...</div>;
-  }
-
-  if (!task) {
-    return <TaskNotFound />;
-  }
+function Badge({
+  variant,
+  children,
+}: {
+  variant: 'purple' | 'green' | 'yellow';
+  size?: 'default' | 'sm';
+  children: React.ReactNode;
+}) {
+  const variantStyles = {
+    purple: 'bg-purple-100 text-purple-700 border-purple-200',
+    green: 'bg-green-100 text-green-700 border-green-200',
+    yellow: 'bg-yellow-100 text-yellow-700 border-yellow-200',
+  };
 
   return (
-    <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-      <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
-        <h1 className="text-2xl font-bold text-gray-800">Detail Tugas</h1>
-        <Link href="/cached" className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors">
-          &larr; Kembali ke Daftar
-        </Link>
-      </div>
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">ID Tugas</h3>
-          <p className="text-gray-900">#{task.id}</p>
-        </div>
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Judul Tugas</h3>
-          <p className="text-xl font-bold text-gray-900">{task.title}</p>
-        </div>
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Deskripsi</h3>
-          <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
-            <p className="text-gray-700">{task.description}</p>
+    <span
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${variantStyles[variant]}`}
+    >
+      {children}
+    </span>
+  );
+}
+
+type TaskDetailCardProps = {
+  todo: Todo;
+};
+
+export default function TaskDetailCard({ todo }: TaskDetailCardProps) {
+  return (
+    <main className="min-h-screen p-6 md:p-10 bg-white text-gray-700">
+      <div className="max-w-2xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100">
+        <header className="mb-6 border-b border-gray-100 pb-4 flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-gray-800">Detail Tugas</h1>
+          <Link
+            href="/"
+            className="text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-200 px-3.5 py-2 rounded-lg transition shadow-xs"
+          >
+            Kembali ke Daftar
+          </Link>
+        </header>
+
+        <div className="space-y-4">
+          <div>
+            <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              ID Tugas
+            </label>
+            <div className="mt-1">
+              <Badge variant="purple" size="default">
+                #{todo.id}
+              </Badge>
+            </div>
+          </div>
+
+          <div>
+            <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              Judul Tugas
+            </label>
+            <h2 className="text-xl font-bold text-gray-900 mt-0.5">{todo.title}</h2>
+          </div>
+
+          <div>
+            <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              Status
+            </label>
+            <div className="mt-1">
+              <Badge
+                variant={todo.completed ? 'green' : 'yellow'}
+                size="sm"
+              >
+                {todo.completed ? 'Selesai' : 'Belum Selesai'}
+              </Badge>
+            </div>
+          </div>
+
+          <div>
+            <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              Tanggal Dibuat
+            </label>
+            <p className="text-gray-500 text-sm mt-1">{todo.createdAt}</p>
           </div>
         </div>
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Status</h3>
-          {task.completed ? (
-            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
-              ✓ Selesai
-            </span>
-          ) : (
-            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
-              Pending
-            </span>
-          )}
-        </div>
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Tanggal Dibuat</h3>
-          <p className="text-gray-700">{task.createdAt}</p>
-        </div>
       </div>
-    </div>
+    </main>
   );
 }

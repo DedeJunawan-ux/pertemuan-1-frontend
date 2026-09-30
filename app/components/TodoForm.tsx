@@ -1,45 +1,36 @@
 'use client';
-import { useState } from 'react';
+
+import React, { useState } from 'react';
 
 interface TodoFormProps {
-  onAddTodo: (title: string, description: string) => void;
+  onAddTodo: (title: string) => void;
 }
 
 export default function TodoForm({ onAddTodo }: TodoFormProps) {
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState(''); 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
-    
-    onAddTodo(title, description || 'Tidak ada deskripsi spesifik.');
-    
+
+    onAddTodo(title.trim());
     setTitle('');
-    setDescription('');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 space-y-4">
-      <div>
-        <input 
-          type="text" 
-          placeholder="Apa yang ingin kamu kerjakan?" 
-          value={title} 
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
-        />
-      </div>
-      <div>
-        <textarea 
-          placeholder="Ketik detail/deskripsi tugas di sini..." 
-          value={description} 
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none h-20"
-        />
-      </div>
-      <button type="submit" className="w-full py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-        Tambah Tugas
+    <form onSubmit={handleSubmit} className="mb-6 flex gap-2">
+      <input
+        type="text"
+        placeholder="Tambahkan tugas baru..."
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="flex-1 px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-800"
+      />
+      <button
+        type="submit"
+        className="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors whitespace-nowrap"
+      >
+        Tambah
       </button>
     </form>
   );
